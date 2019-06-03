@@ -114,6 +114,6 @@ dmypy.json
 .pyre/
 
 # custom
-*config.json
+config.json
 M411*
 builds
