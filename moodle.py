@@ -7,6 +7,7 @@ import os
 import errno
 import getpass
 import time
+import base64
 
 password_correct = False
 
@@ -18,7 +19,7 @@ if os.path.exists("config.json"):
         if "username" in config:
             username = config["username"]
         if "password" in config:
-            password = config["password"]
+            password = base64.b64decode(config["password"].encode("ascii")).decode("ascii")
 
         if "username" in config and "password" in config:
             url = f"https://moodle.bbbaden.ch/login/token.php?username={username}&password={password}&service=moodle_mobile_app"
@@ -44,7 +45,7 @@ while not password_correct:
         with open("config.json", "w+") as f:
             config = {
                 "username": username,
-                "password": password
+                "password": base64.b64encode(password.encode("ascii")).decode("ascii")
                 }
             f.write(json.dumps(config))
     else:
